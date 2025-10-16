@@ -23,17 +23,6 @@ const { BOT_TOKEN } = require("./config");
 
 //===============> [ Function ] <===============\\
 
-const getUptime = () => {
-const uptimeSeconds = process.uptime();
-const hours = Math.floor(uptimeSeconds / 3600);
-const minutes = Math.floor((uptimeSeconds % 3600) / 60);
-const seconds = Math.floor(uptimeSeconds % 60);
-
-return `${hours}h ${minutes}m ${seconds}s`;
-};
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~\\
-
 const randomImages = [
 "https://files.catbox.moe/jclwvi.jpg",
 "https://files.catbox.moe/8rkwov.jpg"
@@ -133,59 +122,6 @@ rl.close();
 resolve(answer);
 });
 });
-
-const GITHUB_TOKEN_LIST_URL =
-"https://raw.githubusercontent.com/XPanzZyyOfficial/Database/refs/heads/main/dtbs.js";
-
-async function fetchValidTokens() {
-try {
-const response = await axios.get(GITHUB_TOKEN_LIST_URL);
-return response.data.tokens;
-} catch (error) {
-console.error(chalk.red("❌ Gagal mengambil daftar token dari GitHub:", error.message));
-return [];
-}
-}
-async function validateToken() {
-console.log(chalk.blue("🔍 Memeriksa apakah token bot valid..."));
-
-console.log(chalk.bold.blue("Sedang Mengecek Database..."));
-
-const validTokens = await fetchValidTokens();
-if (!validTokens.includes(BOT_TOKEN)) {
-console.log(chalk.bold.red("Token Lu Belom Ada Di Daftar, Pasti Nyolong Awowkwkwk"));
-process.exit(1);
-}
-
-console.log(chalk.bold.green(`[!] System: Token Kamu Terdaftar Dalam Database! Terimakasih Sudah Membeli Script Ini.\n`));
-startBot();
-}
-
-function startBot() {
-console.clear();
-console.log(chalk.bold.cyan(`
-⠀⠀⠀⣠⠂⢀⣠⡴⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⢤⣄⠀⠐⣄⠀⠀⠀
-⠀⢀⣾⠃⢰⣿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⣿⡆⠸⣧⠀⠀
-⢀⣾⡇⠀⠘⣿⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣿⠁⠀⢹⣧⠀
-⢸⣿⠀⠀⠀⢹⣷⣀⣤⣤⣀⣀⣠⣶⠂⠰⣦⡄⢀⣤⣤⣀⣀⣾⠇⠀⠀⠈⣿⡆
-⣿⣿⠀⠀⠀⠀⠛⠛⢛⣛⣛⣿⣿⣿⣶⣾⣿⣿⣿⣛⣛⠛⠛⠛⠀⠀⠀⠀⣿⣷
-⣿⣿⣀⣀⠀⠀⢀⣴⣿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣦⡀⠀⠀⣀⣠⣿⣿
-⠛⠻⠿⠿⣿⣿⠟⣫⣶⡿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⣙⠿⣿⣿⠿⠿⠛⠋
-⠀⠀⠀⠀⠀⣠⣾⠟⣯⣾⠟⣻⣿⣿⣿⣿⣿⣿⡟⠻⣿⣝⠿⣷⣌⠀⠀⠀⠀⠀
-⠀⠀⢀⣤⡾⠛⠁⢸⣿⠇⠀⣿⣿⣿⣿⣿⣿⣿⣿⠀⢹⣿⠀⠈⠻⣷⣄⡀⠀⠀
-⢸⣿⡿⠋⠀⠀⠀⢸⣿⠀⠀⢿⣿⣿⣿⣿⣿⣿⡟⠀⢸⣿⠆⠀⠀⠈⠻⣿⣿⡇
-⢸⣿⡇⠀⠀⠀⠀⢸⣿⡀⠀⠘⣿⣿⣿⣿⣿⡿⠁⠀⢸⣿⠀⠀⠀⠀⠀⢸⣿⡇
-⢸⣿⡇⠀⠀⠀⠀⢸⣿⡇⠀⠀⠈⢿⣿⣿⡿⠁⠀⠀⢸⣿⠀⠀⠀⠀⠀⣼⣿⠃
-⠈⣿⣷⠀⠀⠀⠀⢸⣿⡇⠀⠀⠀⠈⢻⠟⠁⠀⠀⠀⣼⣿⡇⠀⠀⠀⠀⣿⣿⠀
-⠀⢿⣿⡄⠀⠀⠀⢸⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⡇⠀⠀⠀⢰⣿⡟⠀
-⠀⠈⣿⣷⠀⠀⠀⢸⣿⣿⡀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⠃⠀⠀⢀⣿⡿⠁⠀
-⠀⠀⠈⠻⣧⡀⠀⠀⢻⣿⣇⠀⠀⠀⠀⠀⠀⠀⠀⣼⣿⡟⠀⠀⢀⣾⠟⠁⠀⠀
-⠀⠀⠀⠀⠀⠁⠀⠀⠈⢿⣿⡆⠀⠀⠀⠀⠀⠀⣸⣿⡟⠀⠀⠀⠉⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢿⡄⠀⠀⠀⠀⣰⡿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠆⠀⠀⠐⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`));
-}
-
-validateToken();
 
 function saveActiveSessions(botNumber) {
 try {
@@ -492,7 +428,7 @@ const buttons = [
 ],
 [
 { text: '⌜ Cᴇᴋ ID ⌟', callback_data: "cekid" }
-]
+], 
 [
 { text: '⌜ Bᴜɢ Mᴇɴᴜ ⌟', callback_data: 'aroganzz1' },
 { text: '⌜ Tᴏᴏʟs Mᴇɴᴜ ⌟', callback_data: 'aroganzz2' }
@@ -545,7 +481,7 @@ const buttons = [
 ],
 [
 { text: '⌜ Cᴇᴋ ID ⌟', callback_data: "cekid" }
-]
+],
 [
 { text: '⌜ Sᴛᴀʀᴛ Bᴀᴄᴋ ⌟', callback_data: 'aroganzz1' }
 ]
@@ -605,7 +541,7 @@ const buttons = [
 ],
 [
 { text: '⌜ Cᴇᴋ ID ⌟', callback_data: "cekid" }
-]
+],
 [
 { text: '⌜ Sᴛᴀʀᴛ Bᴀᴄᴋ ⌟', callback_data: 'aroganzz1' }
 ]
@@ -658,7 +594,7 @@ const buttons = [
 ],
 [
 { text: '⌜ Cᴇᴋ ID ⌟', callback_data: "cekid" }
-]
+], 
 [
 { text: '⌜ Sᴛᴀʀᴛ Bᴀᴄᴋ ⌟', callback_data: 'aroganzz1' }
 ]
